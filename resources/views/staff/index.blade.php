@@ -14,13 +14,14 @@
         </div>
     @endif
     <div class="d-block justify-content-between flex-wrap flex-end-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Data User</h1>
+        <h1 class="h2">Data Staff</h1>
         <div class="d-flex">
-            <h6>Home /<b class="text-primary"> Data User</b></h6>
+            <h6>Home /<b class="text-primary"> Data Staff</b></h6>
         </div>
     </div>
     <div class="card-tools">
-        <a href="{{ route('user.create') }}" class="btn btn-primary mb-3"><i class="bi bi-plus-lg pe-2"></i>Tambah Data User</a>
+        <a href="{{ route('staff.create') }}" class="btn btn-primary mb-3"><i class="bi bi-plus-lg pe-2"></i>Tambah Data
+            Staff</a>
     </div>
     <table class="table table-striped table-bordered table-hover mt-3" id="table">
         <thead>
@@ -34,16 +35,16 @@
         </thead>
         <tbody>
             @php $no = 1; @endphp
-            @foreach ($user as $users)
+            @foreach ($staff as $staffs)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $users['name'] }}</td>
-                    <td>{{ $users['email'] }}</td>
-                    <td>{{ $users['role'] }}</td>
+                    <td>{{ $staffs['name'] }}</td>
+                    <td>{{ $staffs['email'] }}</td>
+                    <td>{{ $staffs['role'] }}</td>
                     <td class="d-flex justify-content-center">
-                        <a href="{{ route('user.edit', $users['id']) }}" class="btn btn-primary me-3">Edit</a>
-                        <form action="{{ route('user.destroy', $users['id']) }}" class="d-inline" method="post"
-                            onsubmit="return confirm('Apakah anda yakin ingin menghapus Data ini?')">
+                        <a href="{{ route('staff.edit', $staffs['id']) }}" class="btn btn-primary me-3">Edit</a>
+                        <form action="{{ route('staff.destroy', $staffs['id']) }}" class="d-inline" method="post"
+                            onsubmit="return confirm('Apakah anda yakin akan menghapus data ini?')">
                             @method('delete')
                             @csrf
                             <button class="btn btn-danger me-3">

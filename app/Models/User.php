@@ -17,6 +17,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    public function letter()
+    {
+        return $this->hasMany(Letter::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

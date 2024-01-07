@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('medicines', function (Blueprint $table) {
-            $table->id(); //primary key auto increments
-            $table->enum('type', ['tablet', 'sirup', 'kapsul']);
-            $table->string('name');
-            $table->integer('price');
-            $table->integer('stock');
+        Schema::create('letters', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('letter_type_id'); //foreign key
+            $table->string('letter_perihal');
+            $table->json('recipients');
+            $table->text('content');
+            $table->string('attachment')->nullable();
+            $table->integer('notulis'); //?? foreign key
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medicines');
+        Schema::dropIfExists('letters');
     }
 };

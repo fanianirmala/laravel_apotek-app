@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="d-block justify-content-between flex-wrap flex-end-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Edit Data User</h1>
+        <h1 class="h2">Edit Data Guru</h1>
         <div class="d-flex">
-            <h6>Home / Data User /<b class="text-primary"> Edit Data User</b></h6>
+            <h6>Home / Data Guru /<b class="text-primary"> Edit Data Guru</b></h6>
         </div>
     </div>
-    <form action={{ route('user.update', $user['id']) }}" method="POST" class="card p-5">
+    <form action={{ route('guru.update', $user['id']) }}" method="POST" class="card p-5">
         @csrf
         @method('PATCH')
         <div class="mb-3 row">

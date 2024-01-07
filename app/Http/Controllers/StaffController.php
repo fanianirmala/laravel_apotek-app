@@ -2,40 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-class UserController extends Controller
+use App\Models\User;
+
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function loginAuth(Request $request){
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $user = $request->only(['email', 'password']);
-        if(Auth::attempt($user)){
-            return redirect()->route('home.page');
-        }else{
-            return redirect()->back()->with('failed', 'Proses login gagal! silahkan coba kembali menggunakan data yang benar!');
-        }
-    }
-
-    public function logout(){
-        Auth::logout();
-        return redirect()->route('login')->with('logout', 'Anda telah Logout!');
-    }
-
     public function index()
     {
-        $user = User::all();
-        return view('user.index', compact('user'));
+        $staff = User::all()->where('role', 'staff');
+        return view('staff.index', compact('staff'));
     }
 
     /**
@@ -45,8 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //menampilkan layouting html pada folder resources-view
-        return view('user.create');
+        return view('staff.create');
     }
 
     /**
@@ -55,34 +35,31 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
-            'role' => 'required|in:staff,guru',
         ]);
 
         $password = substr($request->email, 0, 3). substr($request->name, 0, 3);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
+            'name' =>$request->name,
+            'email' =>$request->email,
             'password' => Hash::make($password),
-        ]) ;
-        //atau jika seluruh data input akan dimaukan langsung ke db bisa dengan perintah Medicine::create($request->all());
-        return redirect()->route('user.index')->with('success', 'Berhasil menambahkan data User!');
+        ]);
+
+        return redirect()->route('staff.index')->with('success', 'Berhasil menambahkan data Staff!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $medicine
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         //
     }
@@ -90,26 +67,24 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $medicine
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $user = User::find($id);
-        //atau $medicine =  Medicine::where('id', $id)->first()
-        return view('user.edit', compact('user'));
+        return view('staff.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $medicine
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
         $user = User::find($id);
 
         $request->validate([
@@ -132,21 +107,18 @@ class UserController extends Controller
                 'role' => $request->role,
             ]);
         }
-
-        return redirect()->route('user.index')->with('success', 'Berhasil mengubah data User!');
+        return redirect()->route('staff.index')->with('success', 'Berhasil mengubah data Staff!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $medicine
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
         User::where('id', $id)->delete();
-
-        return redirect()->route('user.index')->with('success', 'Berhasil menghapus data User!');
+        return redirect()->route('staff.index')->with('success', 'Berhasil menghapus data Staff!');
     }
 }

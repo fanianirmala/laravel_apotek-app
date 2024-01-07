@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="d-block justify-content-between flex-wrap flex-end-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Tambah Data User</h1>
+        <h1 class="h2">Tambah Data Staff</h1>
         <div class="d-flex">
-            <h6>Home / Data User /<b class="text-primary"> Tambah Data User</b></h6>
+            <h6>Home / Data Staff /<b class="text-primary"> Tambah Data Staff</b></h6>
         </div>
     </div>
-    <form action="{{ route('user.store') }}" method="POST" class="card p-5">
+    <form action="{{ route('staff.store') }}" method="POST" class="card p-5">
         {{-- mengecek value dari hasil input user --}}
         @csrf
         <div class="container">
@@ -36,13 +36,10 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="role" class="col-sm-2 col-form-label">Tipe pengguna :</label>
+                <label for="role" class="col-sm-2 col-form-label" hidden>Tipe pengguna :</label>
                 <div class="col-sm-10">
-                    <select class="form-select @error('role') is-invalid @enderror" id="role" name="role">
-                        <option selected disabled hidden>Pilih</option>
-                        <option value="staff">Staff TU</option>
-                        <option value="guru">Guru</option>
-                    </select>
+                    <input type="text" class="form-control @error('role') is-invalid @enderror" id="role"
+                        name="role" value="staff" hidden>
                     @error('role')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -50,7 +47,8 @@
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
         </div>
     </form>
 @endsection
